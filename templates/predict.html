@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{% block title %} {{ ml['title'] }} {% endblock %}</h2>
+    <span class="badge badge-primary">{{ ml['database'] }}</span>
+    <p><i> {{ text }} </i></p>

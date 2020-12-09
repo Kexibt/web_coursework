@@ -2,6 +2,58 @@
 
 {% block content %}
     <h2>{% block title %} {{ ml['title'] }} {% endblock %}</h2>
-    <span class="badge badge-primary">{{ ml['database'] }}</span>
-    <p> Here you can make a predict of the price of a Boston Housing in our fantasy world </p>
+    <span class="badge badge-primary">This model using {{ ml['database'] }}</span>
+    <p><i> Here you can predict house prices in Boston using this neural network model<br><i> Enter your values </i></br> </i></p>
+
+<form method="post">
+    <div class="form-group">
+        <input type="real" name="CRIM"
+               placeholder="CRIM" class="form-control"
+               value="{{ request.form['CRIM'] }}"></input>
+        <input type="real" name="ZN"
+               placeholder="ZN" class="form-control"
+               value="{{ request.form['ZN'] }}"></input>
+        <input type="real" name="INDUS"
+               placeholder="INDUS" class="form-control"
+               value="{{ request.form['INDUS'] }}"></input>
+        <input type="real" name="CHAS"
+               placeholder="CHAS" class="form-control"
+               value="{{ request.form['CHAS'] }}"></input>
+        <input type="real" name="NOX"
+               placeholder="NOX" class="form-control"
+               value="{{ request.form['NOX'] }}"></input>
+        <input type="real" name="RM"
+               placeholder="RM" class="form-control"
+               value="{{ request.form['RM'] }}"></input>
+        <input type="real" name="AGE"
+               placeholder="AGE" class="form-control"
+               value="{{ request.form['AGE'] }}"></input>
+        <input type="real" name="DIS"
+               placeholder="DIS" class="form-control"
+               value="{{ request.form['DIS'] }}"></input>
+        <input type="real" name="RAD"
+               placeholder="RAD" class="form-control"
+               value="{{ request.form['RAD'] }}"></input>
+        <input type="real" name="TAX"
+               placeholder="TAX" class="form-control"
+               value="{{ request.form['TAX'] }}"></input>
+        <input type="real" name="PTRARIO"
+               placeholder="PTRARIO" class="form-control"
+               value="{{ request.form['PTRARIO'] }}"></input>
+        <input type="real" name="B"
+               placeholder="B" class="form-control"
+               value="{{ request.form['B'] }}"></input>
+        <input type="real" name="LSTAT"
+               placeholder="LSTAT" class="form-control"
+               value="{{ request.form['LSTAT'] }}"></input>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<form action="{{ url_for('delete', id=ml['id']) }}" method="POST">
+    <input type="submit" value="Delete model"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure you want to delete this model?')">
+</form>
 {% endblock %}

@@ -4,7 +4,7 @@ conn = sqlite3.connect("database_models.db")
 cursor = conn.cursor()
 count = 3
 
-createtable = False
+createtable = not True
 filltable = False
 
 # creating table
@@ -18,9 +18,21 @@ if createtable:
 
 if filltable:
     cursor.execute("INSERT INTO models (title, path, database) VALUES (?, ?, ?)",
-                ('First neural network training model', 'model/model', 'database1')
+                ('First default neural network training model', 'model/model1', 'database1')
                 )
+
+    cursor.execute("INSERT INTO models (title, path, database) VALUES (?, ?, ?)",
+                    ('Second default neural network training model', 'model/model2', 'database2')
+                    )
+
+    cursor.execute("INSERT INTO models (title, path, database) VALUES (?, ?, ?)",
+                    ('Third default neural network training model', 'model/model3', 'database3')
+                    )
     conn.commit()
+
+
+max_id = cursor.execute('SELECT max(id) FROM models').fetchone()[0]
+print("-----", max_id)
 
 with conn:
     cur = conn.cursor()

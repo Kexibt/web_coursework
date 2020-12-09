@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Boston Housing price prediction {% endblock %}</h1>
+    <h2> {{text}} </h2>
+    {% for ml in mls %}
+    <a href="{{ url_for('neural', ml_id=ml['id']) }}">
+        <h3>{{ ml['title'] }}</h3>
+    </a>
+    <hr>
+{% endfor %}
+{% endblock %}

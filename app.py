@@ -4,6 +4,7 @@ import numpy as np
 import traceback
 import pickle
 import pandas as pd
+import sqlite3
  
  
 # App definition
@@ -15,12 +16,23 @@ with open('model/model.pkl', 'rb') as f:
  
 with open('model/model_columns.pkl', 'rb') as f:
    model_columns = pickle.load(f)
- 
+
+def get_dbm_connection():
+    conn = sqlite3.connect('database_models.db')
+    conn.row_factory = sqlite3.Row
+    return conn
  
 @app.route('/')
 def welcome():
-   return "Boston Housing Price Prediction"
- 
+    conn = get_dbm_connection()
+    mls = conn.execute('SELECT * FROM models').fetchall()
+    conn.close()
+    return render_template('index.html', text="Choose your fighter", mls=mls)
+
+@app.route('/create')
+def create():
+    return render_template('Create.html', text="Create your own model")
+
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
    if flask.request.method == 'GET':
@@ -41,7 +53,21 @@ def predict():
            return jsonify({
                "trace": traceback.format_exc()
                })
-      
+
+
+def get_ml(ml_id):
+    conn = get_dbm_connection()
+    ml = conn.execute('SELECT * FROM models WHERE id = ?',
+                        (ml_id,)).fetchone()
+    conn.close()
+    if ml is None:
+        abort(404)
+    return ml
+
+@app.route('/<int:ml_id>')
+def neural(ml_id):
+    ml = get_ml(ml_id)
+    return render_template('ml.html', ml=ml)
  
 if __name__ == "__main__":
    app.run()

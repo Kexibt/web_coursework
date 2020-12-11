@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("database_models.db")
+conn = sqlite3.connect("database/database_models.db")
 cursor = conn.cursor()
 count = 3
 

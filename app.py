@@ -14,7 +14,7 @@ app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = 'secret'
 
 def get_dbm_connection():
-    conn = sqlite3.connect('database_models.db')
+    conn = sqlite3.connect('database/database_models.db')
     conn.row_factory = sqlite3.Row
     return conn
  
@@ -85,7 +85,7 @@ if __name__ == "__main__":
    app.run()
 
 def new_ml(title, val_database):
-    conn = sqlite3.connect("database_models.db")
+    conn = sqlite3.connect("database/database_models.db")
     cursor = conn.cursor()
     ind = cursor.execute('SELECT max(id) FROM models').fetchone()[0] + 1
     s_model = 'model/model'
